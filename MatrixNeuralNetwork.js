@@ -1,14 +1,17 @@
-class neuralNetwork2 {
+class neuralNetwork {
   constructor(sizes){
     //Create layers:
     this.layers = new Array();
     for(let i = 0; i < sizes.length; i++){
       this.layers.push(new Matrix(sizes[1]));
     }
-    //Create weights:
+    //Create weights and biases:
     this.weights = new Array();
+    this.biases = new Array();
+
     for(let i = 0; i < this.layers.length - 1; i++){
       this.weights.push(new Matrix(sizes[i+1],sizes[i]));
+      this.biases.push(new Matrix(sizes[i+1],1));
     }
   }
   /* An activation function for the network.
@@ -20,6 +23,7 @@ class neuralNetwork2 {
       let w = this.weights[i];
       let x = this.layers[i];
       this.layers[i+1] = Matrix.product(w, x);
+      this.layers[i+1].add(this.biases[i]);
       this.layers[i+1].func(sigmoid);
     }
     this.output = this.layers[this.layers.length - 1];
@@ -48,6 +52,7 @@ class neuralNetwork2 {
       let wT = Matrix.transpose(this.weights[i]);
       //Product:
       let change = Matrix.product(error, inT);
+      this.biases[i].add(error);
       error = Matrix.product(wT, error);
       //Update weights:
       this.weights[i].add(change);
