@@ -58,6 +58,27 @@ class neuralNetwork {
       this.weights[i].add(change);
     }
   }
+  
+  
+  /* Visualise the network. Takes a P% graphics input.
+  *  This function therefor requires the P5.js library.
+  *  Returns the adjusted graphics
+  */
+  visualise(g){
+    //Setup the nodes and loop through them
+    for(let i = 0; i < this.layers.length; i++){
+      let xdiv = width / (this.layers.length + 1);
+
+      for(let j = 0; j < this.layers[i].matrix.length; j++){
+        let div = (height) / (this.layers[i].matrix.length + 1);
+        fill(map(this.layers[i].matrix[j][0], 0, 1, 0, 255));
+        ellipse(xdiv + i * xdiv, div + j * div, 10, 10);
+        fill(0);
+        text(roundDecimal(this.layers[i].matrix[j][0]), 20 + xdiv + i * xdiv, div + j * div);
+      }
+    }
+    return g;
+  }
 }
 
 function sigmoid(x) {
