@@ -3,7 +3,7 @@ class neuralNetwork {
     //Create layers:
     this.layers = new Array();
     for(let i = 0; i < sizes.length; i++){
-      this.layers.push(new Matrix(sizes[1]));
+      this.layers.push(new Matrix(sizes[i]));
     }
     //Create weights and biases:
     this.weights = new Array();
